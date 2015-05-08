@@ -1,0 +1,7 @@
+#!/bin/sh
+(
+    flock -n 9 || exit 1
+    {% for line in item.job %}
+    {{ line }}
+    {% endfor %}
+) 9>/var/lock/{{ item.name }}

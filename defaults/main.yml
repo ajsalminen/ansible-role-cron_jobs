@@ -1,0 +1,4 @@
+---
+# defaults file for ajsalminen.cron_job
+cron_job_default_file: ansible_cron_jobs
+cron_job_dir: /opt/ansible_cron_jobs

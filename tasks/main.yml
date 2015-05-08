@@ -1,0 +1,33 @@
+---
+# tasks file for ajsalminen.cron_job
+
+- name: Ensure the directory for job scripts exists.
+  file:
+    path={{ cron_job_dir }}
+    state=directory
+    mode=0755
+    owner=root
+    group=root
+
+
+- name: Install wrapper script for the cron.
+  template:
+    src=cron.sh.j2
+    dest={{ cron_job_dir }}/{{ item.name }}
+    mode=0755
+    owner=root
+    group=root
+  with_items: cron_job_list
+
+- name: Install cron entry for the cron job.
+  cron:
+    cron_file={{ item.file|default(cron_job_default_file) }}
+    name={{ item.name }}
+    job={{ cron_job_dir }}/{{ item.name }}
+    user={{ item.user|default(cron_job_default_user) }}
+    minute={{ item.minute|default('*') }}
+    hour={{ item.hour|default('*') }}
+    day={{ item.day|default('*') }}
+    month={{ item.month|default('*') }}
+    weekday={{ item.weekday|default('*') }}
+  with_items: cron_job_list
