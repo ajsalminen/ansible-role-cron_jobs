@@ -1,4 +1,6 @@
 #!/bin/sh
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 (
     flock -n 9 || exit 1
     {% for line in item.job %}
