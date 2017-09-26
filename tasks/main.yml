@@ -17,7 +17,7 @@
     mode=0755
     owner=root
     group=root
-  with_items: cron_job_list
+  with_items: "{{ cron_job_list }}"
 
 - name: Install cron entry for the cron job.
   cron:
@@ -30,4 +30,4 @@
     day={{ item.day|default('*') }}
     month={{ item.month|default('*') }}
     weekday={{ item.weekday|default('*') }}
-  with_items: cron_job_list
+  with_items: "{{ cron_job_list }}"
